@@ -1,0 +1,76 @@
+/* Tarea.module.css */
+.tarea__contenedor {
+  display: flex;
+  gap: 1rem;
+  
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+
+  align-items: center;
+  transition: all .3s ease;
+  cursor: pointer;
+}
+
+.tarea__contenedor:hover {
+  background-color: rgb(221, 221, 221);
+}
+
+
+.tarea__parrafo {
+  flex: 1;
+  margin: 0;
+  max-height: 30px; /* Altura máxima antes de scroll */
+  overflow-y: auto; /* Scroll vertical cuando sea necesario */
+  overflow-x: hidden;
+  padding-right: 0.5rem; /* Espacio para el scroll */
+  
+  /* Estilo del scroll */
+  scrollbar-width: 0px;
+  scrollbar-color: #c1c1c1 transparent;
+}
+
+/* Personalizar scroll para navegadores WebKit */
+.tarea__parrafo::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tarea__parrafo::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 3px;
+}
+
+.tarea__contenedor-botones {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tarea__icon {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.icono-pen:hover {
+  color: #4CAF50;
+}
+
+.icono-trash:hover {
+  color: #ff5252;
+}
+
+
+.tarea__input-editar {
+  display: flex;
+  width: 80%;
+  height: 30px;
+
+  padding: 0px 10px;
+
+  background-color: transparent;
+
+  align-items: center;
+  color: black;
+  font-size: 18px;
+}
