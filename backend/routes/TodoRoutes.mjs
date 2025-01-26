@@ -1,10 +1,10 @@
 import express from 'express'
-import { TodoGet } from '../controllers/TodoControllers.mjs'
+import { TodoGet, TodoPost } from '../controllers/TodoControllers.mjs'
 
 const router = express.Router()
 
 
 router.get('/',TodoGet)
-
+router.post('/',TodoPost)
 
 export default router

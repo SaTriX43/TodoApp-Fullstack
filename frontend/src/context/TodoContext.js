@@ -1,5 +1,6 @@
 'use client'
 import { todoGet } from '@/utils/api/TodoGet'
+import { TodoPost } from '@/utils/api/TodoPost'
 import { createContext, useEffect, useState } from 'react'
 
 const TodoContext = createContext()
@@ -36,6 +37,17 @@ function TodoProvider({children}) {
     } 
   }
 
+  async function agregarTarea(tarea) {
+    try {
+      const mensaje = await TodoPost(tarea)
+      alert(mensaje.mensaje)
+      actualizarTareas()
+    } catch (error) {
+      console.log(error.message)
+      setError(error.message)
+    }
+  }
+
   function eliminarTarea(id) {
     console.log('eliminando tarea con id',id)
     setTareas(tareas.filter(t => t.id !== id))
@@ -45,11 +57,6 @@ function TodoProvider({children}) {
     setTareas(tareas.map(tarea => (
       tarea.id === id ? {...tarea, tarea: nuevoTexto} : tarea
     )))
-  }
-
-  function agregarTarea(texto) {
-    console.log('creando tarea con contenido', texto)
-    setTareas([...tareas , {id:Date.now() , tarea: texto, marcada:false} ])
   }
 
   return (

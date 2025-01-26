@@ -13,6 +13,12 @@ export const Formulario = () => {
 
   function manejarEnvioTarea(e) {
     e.preventDefault()
+    if(!inputValue.trim()) {
+      alert('Porfavor escriba algo en el campo')
+      return 
+    }
+
+
     agregarTarea(inputValue)
     setInputValue('')
   }
