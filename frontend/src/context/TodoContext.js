@@ -1,4 +1,5 @@
 'use client'
+import { TodoDelete } from '@/utils/api/TodoDelete'
 import { todoGet } from '@/utils/api/TodoGet'
 import { TodoPost } from '@/utils/api/TodoPost'
 import { createContext, useEffect, useState } from 'react'
@@ -39,8 +40,7 @@ function TodoProvider({children}) {
 
   async function agregarTarea(tarea) {
     try {
-      const mensaje = await TodoPost(tarea)
-      alert(mensaje.mensaje)
+      await TodoPost(tarea)
       actualizarTareas()
     } catch (error) {
       console.log(error.message)
@@ -48,9 +48,14 @@ function TodoProvider({children}) {
     }
   }
 
-  function eliminarTarea(id) {
-    console.log('eliminando tarea con id',id)
-    setTareas(tareas.filter(t => t.id !== id))
+  async function eliminarTarea(id) {
+    try {
+      await TodoDelete(id)
+      actualizarTareas()
+    } catch (error) {
+      console.log(error.message)
+      setError(error.message)
+    }
   }
 
   function editarTarea(id, nuevoTexto) {
