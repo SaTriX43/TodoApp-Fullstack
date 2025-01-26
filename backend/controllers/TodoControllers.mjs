@@ -44,3 +44,19 @@ export async function TodoDelete(req,res) {
     res.status(500).json({error:`A ocurrido un error en el metodo Post backend= ${error.message}`})
   }
 }
+
+
+// metodo PUT
+export async function TodoPut(req,res) {
+  try {
+    const {id} = req.params
+    const {tarea} = req.body
+
+     await pool.query(`UPDATE tareas SET tarea = $1 WHERE id = $2 `, [tarea, id])
+
+
+    res.status(200).send()
+  } catch (error) {
+    res.status(500).json({error:`A ocurrido un error en el metodo Post backend= ${error.message}`})
+  }
+}

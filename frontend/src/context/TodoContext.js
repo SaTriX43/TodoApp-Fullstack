@@ -2,6 +2,7 @@
 import { TodoDelete } from '@/utils/api/TodoDelete'
 import { todoGet } from '@/utils/api/TodoGet'
 import { TodoPost } from '@/utils/api/TodoPost'
+import { TodoPut } from '@/utils/api/TodoPut'
 import { createContext, useEffect, useState } from 'react'
 
 const TodoContext = createContext()
@@ -58,10 +59,14 @@ function TodoProvider({children}) {
     }
   }
 
-  function editarTarea(id, nuevoTexto) {
-    setTareas(tareas.map(tarea => (
-      tarea.id === id ? {...tarea, tarea: nuevoTexto} : tarea
-    )))
+  async function editarTarea(id, nuevoTexto) {
+    try {
+      await TodoPut(id,nuevoTexto)
+      actualizarTareas()
+    } catch (error) {
+      console.log(error.message)
+      setError(error.message)
+    }
   }
 
   return (
