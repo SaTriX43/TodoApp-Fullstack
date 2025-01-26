@@ -1,11 +1,40 @@
 'use client'
-import { createContext, useState } from 'react'
+import { todoGet } from '@/utils/api/TodoGet'
+import { createContext, useEffect, useState } from 'react'
 
 const TodoContext = createContext()
 
 function TodoProvider({children}) {
 
   const [tareas, setTareas] = useState([])
+  const [cargando,setCargando] = useState(true)
+  const [error,setError] = useState(null)
+
+  useEffect(() => {
+    async function cargarTareas() {
+      try {
+        const tareas = await todoGet()
+        setTareas(tareas)
+      } catch (error) {
+        setError(error.message)
+      }finally {
+        setCargando(false)
+      }
+    }
+
+    cargarTareas()
+  },[])
+
+  // funciones 
+
+  async function actualizarTareas() {
+    try {
+      const tareas = await todoGet()
+      setTareas(tareas)
+    } catch (error) {
+      setError(error)
+    } 
+  }
 
   function eliminarTarea(id) {
     console.log('eliminando tarea con id',id)
@@ -13,9 +42,9 @@ function TodoProvider({children}) {
   }
 
   function editarTarea(id, nuevoTexto) {
-    setTareas(tareas.map(tarea => {
+    setTareas(tareas.map(tarea => (
       tarea.id === id ? {...tarea, tarea: nuevoTexto} : tarea
-    }))
+    )))
   }
 
   function agregarTarea(texto) {
@@ -24,7 +53,18 @@ function TodoProvider({children}) {
   }
 
   return (
-    <TodoContext.Provider value={{tareas, eliminarTarea, agregarTarea, editarTarea}}>
+    <TodoContext.Provider value={
+      {
+        tareas, 
+        error,
+        cargando,
+
+        actualizarTareas,
+        eliminarTarea, 
+        agregarTarea, 
+        editarTarea
+      }
+    }>
       {children}
     </TodoContext.Provider>
   )

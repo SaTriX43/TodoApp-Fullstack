@@ -9,7 +9,15 @@ import { useContext } from "react";
 
 export default function Inicio() {
 
-  const {tareas} = useContext(TodoContext)
+  const {tareas,error,cargardo} = useContext(TodoContext)
+
+  if(cargardo) {
+    return <div>Cargando....</div>
+  }
+
+  if(error) {
+    return <div>{error}</div>
+  }
 
   return (
     <SoloCliente>
