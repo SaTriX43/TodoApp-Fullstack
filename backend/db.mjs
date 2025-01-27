@@ -4,7 +4,9 @@ import 'dotenv/config';
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {rejectUnauthorized: true} ,
+  ssl: {
+    rejectUnauthorized: false // Permite certificados autofirmados
+  }
 });
 
 export default pool
