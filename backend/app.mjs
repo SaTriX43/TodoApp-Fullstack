@@ -3,7 +3,9 @@ import cors from 'cors'
 import TodoRoutes from './routes/TodoRoutes.mjs'
 
 const app = express()
-app.use(cors())
+app.use(cors( {
+  origin: ["https://todoapp-fullstack-production.up.railway.app", "http://localhost:3000"]
+}))
 app.use(express.json())
 
 app.use('/tareas',TodoRoutes)
