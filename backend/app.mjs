@@ -4,17 +4,25 @@ import TodoRoutes from './routes/TodoRoutes.mjs'
 
 const app = express()
 
-const corsOptions = {
-  origin: ['http://localhost:3000', 'https://todo-app-fullstack-theta.vercel.app'], // Orígenes permitidos
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
-  credentials: true, // Permitir cookies
-  preflightContinue: false, // No seguir después de manejar preflight
-  optionsSuccessStatus: 204, // Código de éxito para OPTIONS
-};
+app.options('*', cors());
 
-
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://todo-app-fullstack-theta.vercel.app'
+    ];
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+  allowedHeaders: 'Content-Type,Authorization',
+  credentials: true
+}));
 app.use(express.json())
 
 app.use('/api/tareas',TodoRoutes)
