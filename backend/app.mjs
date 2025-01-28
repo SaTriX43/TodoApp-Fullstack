@@ -3,12 +3,18 @@ import cors from 'cors'
 import TodoRoutes from './routes/TodoRoutes.mjs'
 
 const app = express()
-app.use(cors({
-  origin: [
-    "https://todoapp-fullstack-production-132c.up.railway.app", // URL correcta del frontend
-    "http://localhost:3000"
-  ]
-}));
+
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://upbeat-playfulness-production.up.railway.app'], // Orígenes permitidos
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+  credentials: true, // Permitir cookies
+  preflightContinue: false, // No seguir después de manejar preflight
+  optionsSuccessStatus: 204, // Código de éxito para OPTIONS
+};
+
+
+app.use(cors(corsOptions));
 app.use(express.json())
 
 app.use('/api/tareas',TodoRoutes)
