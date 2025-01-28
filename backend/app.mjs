@@ -3,12 +3,15 @@ import cors from 'cors'
 import TodoRoutes from './routes/TodoRoutes.mjs'
 
 const app = express()
-app.use(cors( {
-  origin: ["todoapp-fullstack-production-132c.up.railway.app", "http://localhost:3000"]
-}))
+app.use(cors({
+  origin: [
+    "https://todoapp-fullstack-production-132c.up.railway.app", // URL correcta del frontend
+    "http://localhost:3000"
+  ]
+}));
 app.use(express.json())
 
-app.use('/tareas',TodoRoutes)
+app.use('/api/tareas',TodoRoutes)
 
 
 // para las rutas que no coincidan 

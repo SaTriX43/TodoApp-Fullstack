@@ -1,5 +1,5 @@
 export async function todoGet() {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/tareas`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/tareas`;
   try {
     const response = await fetch(url)
 
