@@ -5,7 +5,7 @@ import TodoRoutes from './routes/TodoRoutes.mjs'
 const app = express()
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://todo-app-fullstack-theta.vercel.app'], // Orígenes permitidos
+  origin: ['*'], // Orígenes permitidos
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
   allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
   credentials: true, // Permitir cookies
