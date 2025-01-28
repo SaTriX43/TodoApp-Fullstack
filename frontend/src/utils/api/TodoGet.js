@@ -1,5 +1,5 @@
 export async function todoGet() {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/tareas`;
+  const url = `https://todoapp-fullstack-production.up.railway.app/api/tareas`;
   try {
     const response = await fetch(url)
 
