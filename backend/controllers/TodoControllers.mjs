@@ -3,7 +3,7 @@ import pool from "../db.mjs"
 // metodo get 
 export async function TodoGet(req,res) {
   try {
-    const userId = req.headers['X-User-Id']
+    const userId = req.headers['x-user-id']
     const {rows} = await pool.query(`SELECT * FROM tareas WHERE userid = $1`,[userId])
     res.json(rows)
   } catch (error) {
@@ -17,7 +17,7 @@ export async function TodoGet(req,res) {
 export async function TodoPost(req,res) {
   try {
     const {tarea} = req.body  
-    const userId = req.headers['X-User-Id']
+    const userId = req.headers['x-user-id']
 
     await pool.query(`INSERT INTO tareas (tarea, marcada, userid) VALUES ($1, $2, $3)`,[tarea, false, userId])
 
@@ -32,7 +32,7 @@ export async function TodoPost(req,res) {
 export async function TodoDelete(req,res) {
   try {
     const {id} = req.params
-    const userId = req.headers['X-User-Id']
+    const userId = req.headers['x-user-id']
 
     const resultado = await pool.query(`DELETE FROM tareas WHERE id = $1 AND userid = $2`,[id, userId])
 
@@ -52,7 +52,7 @@ export async function TodoPut(req,res) {
   try {
     const {id} = req.params
     const {tarea} = req.body
-    const userId = req.headers['X-User-Id']
+    const userId = req.headers['x-user-id']
 
      await pool.query(`UPDATE tareas SET tarea = $1 WHERE id = $2 AND userid = $3 `, [tarea, id, userId])
 
