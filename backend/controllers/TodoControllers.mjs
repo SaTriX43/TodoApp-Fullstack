@@ -3,9 +3,8 @@ import pool from "../db.mjs"
 // metodo get 
 export async function TodoGet(req,res) {
   try {
-    const {rows} = await pool.query(`SELECT * FROM tareas`)
-
-    console.log(rows)
+    const userId = req.headers['X-User-Id']
+    const {rows} = await pool.query(`SELECT * FROM tareas WHERE userId = $1`,[userId])
     res.json(rows)
   } catch (error) {
     res.status(500)
@@ -17,9 +16,10 @@ export async function TodoGet(req,res) {
 // metodo post 
 export async function TodoPost(req,res) {
   try {
-    const {tarea} = req.body
+    const {tarea} = req.body  
+    const userId = req.headers['X-User-Id']
 
-    await pool.query(`INSERT INTO tareas (tarea, marcada) VALUES ($1, $2)`,[tarea, false])
+    await pool.query(`INSERT INTO tareas (tarea, marcada, userId) VALUES ($1, $2, $3)`,[tarea, false, userId])
 
     res.status(200).send()
   } catch (error) {
@@ -32,8 +32,9 @@ export async function TodoPost(req,res) {
 export async function TodoDelete(req,res) {
   try {
     const {id} = req.params
+    const userId = req.headers['X-User-Id']
 
-    const resultado = await pool.query(`DELETE FROM tareas WHERE id = $1`,[id])
+    const resultado = await pool.query(`DELETE FROM tareas WHERE id = $1 AND userId = $2`,[id, userId])
 
     if (resultado.rowCount === 0) {
       return res.status(404).json({ error: 'Tarea no encontrada' });
@@ -51,8 +52,9 @@ export async function TodoPut(req,res) {
   try {
     const {id} = req.params
     const {tarea} = req.body
+    const userId = req.headers['X-User-Id']
 
-     await pool.query(`UPDATE tareas SET tarea = $1 WHERE id = $2 `, [tarea, id])
+     await pool.query(`UPDATE tareas SET tarea = $1 WHERE id = $2 AND userId = $3 `, [tarea, id, userId])
 
 
     res.status(200).send()

@@ -1,10 +1,15 @@
+import { obtenerUsuarioId } from "../funciones/userID";
+
 export async function TodoPost(tarea) {
+
+  const userId = obtenerUsuarioId()
   const url = `https://todoapp-fullstack-production.up.railway.app/api/tareas`;
   try {
     const peticion = await fetch(url, {
       method:'POST',
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type' : 'application/json',
+        'X-User-Id' : userId
       },
       body: JSON.stringify({tarea})
     })

@@ -1,7 +1,17 @@
+import { obtenerUsuarioId } from "../funciones/userID";
+
 export async function todoGet() {
+
+  const userId = obtenerUsuarioId()
+
   const url = `https://todoapp-fullstack-production.up.railway.app/api/tareas`;
   try {
-    const response = await fetch(url)
+    const response = await fetch(url, {
+      method:'GET',
+      headers: {
+        'X-User-Id' : userId
+      }
+    })
 
   if(!response.ok) {
     const error = await response.json()
